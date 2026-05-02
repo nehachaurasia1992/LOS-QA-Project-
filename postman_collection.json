@@ -1,0 +1,228 @@
+{
+    "info": {
+        "name": "Loan Origination System (LOS) API",
+        "description": "API collection for testing the Alpha Loan Manager LOS. Includes endpoints for Authentication, Application Management, KYC, and Credit Bureau integration.",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Authentication",
+            "item": [
+                {
+                    "name": "Login",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"username\": \"uw_smith\",\n    \"password\": \"hash_secure_99\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/v1/auth/login",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "auth",
+                                "login"
+                            ]
+                        },
+                        "description": "TC_01: Valid Login validation."
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Loan Applications",
+            "item": [
+                {
+                    "name": "Create Application",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"applicantName\": \"John Doe\",\n    \"ssn\": \"000-00-0000\",\n    \"dob\": \"1990-01-01\",\n    \"loanAmount\": 50000.00,\n    \"monthlyIncome\": 6000.00\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/v1/applications",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "applications"
+                            ]
+                        },
+                        "description": "TC_05: Create application scenario."
+                    }
+                },
+                {
+                    "name": "Get Loan Details",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/v1/loan/123",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "loan",
+                                "123"
+                            ]
+                        },
+                        "description": "TC_19: Get Loan Details API validation."
+                    }
+                },
+                {
+                    "name": "Approve Loan",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"status\": \"Approved\",\n    \"comments\": \"Credit score meets threshold.\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/v1/applications/123/approve",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "applications",
+                                "123",
+                                "approve"
+                            ]
+                        },
+                        "description": "TC_09 & TC_20: Workflow approval and Unauthorized access check."
+                    }
+                }
+            ]
+        },
+        {
+            "name": "KYC & Verification",
+            "item": [
+                {
+                    "name": "Upload Document",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "file",
+                                    "type": "file",
+                                    "src": []
+                                },
+                                {
+                                    "key": "docType",
+                                    "value": "ID_PROOF",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/v1/kyc/upload",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "kyc",
+                                "upload"
+                            ]
+                        },
+                        "description": "TC_03: Upload valid documents."
+                    }
+                },
+                {
+                    "name": "Credit Bureau Check",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/v1/credit-check?ssn=000-00-0000",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "credit-check"
+                            ],
+                            "query": [
+                                {
+                                    "key": "ssn",
+                                    "value": "000-00-0000"
+                                }
+                            ]
+                        },
+                        "description": "TC_21: Credit Bureau Mock Integration."
+                    }
+                }
+            ]
+        }
+    ],
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://api.alpha-loan-manager.local",
+            "type": "string"
+        },
+        {
+            "key": "token",
+            "value": "your_jwt_token_here",
+            "type": "string"
+        }
+    ]
+}

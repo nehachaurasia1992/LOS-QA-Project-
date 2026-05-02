@@ -1,0 +1,26 @@
+TC_ID,Module,Test Scenario,Test Steps,Test Data,Expected Result,Actual Result,Status,Priority
+TC_01,Login,Valid login,Enter valid credentials,User1/Pass,Login success,,,High
+TC_02,Login,Invalid login,Enter wrong password,User1/Wrong,Error message,,,High
+TC_03,KYC,Upload valid docs,Upload ID proof,Valid ID,Upload success,,,High
+TC_04,KYC,Upload invalid docs,Upload wrong format,TXT file,Error shown,,,Medium
+TC_05,Loan App,Create application,Fill loan form,Valid data,Application created,,,High
+TC_06,Loan App,Missing fields,Submit empty form,,Validation error,,,High
+TC_07,Credit Score,Fetch score,Call API,Valid SSN,Score fetched,,,High
+TC_08,Workflow,Submit application,Click submit,Valid app,Status=Submitted,,,High
+TC_09,Workflow,Approve loan,Underwriter approves,Valid case,Status=Approved,,,High
+TC_10,Workflow,Reject loan,Underwriter rejects,Low score,Status=Rejected,,,High
+TC_11,Interest,Calculate EMI,Enter loan details,"10000,12m",Correct EMI,,,High
+TC_12,Docs,Generate agreement,Click generate,Approved loan,PDF generated,,,Medium
+TC_13,Payment,Disbursement,Trigger payment,Approved,Amount credited,,,High
+TC_14,Security,Role access,Login as user,Normal user,No approve access,,,High
+TC_15,Notification,Send SMS,Trigger event,Approved,SMS sent,,,Low
+TC_16,Database,Verify application persistence,Submit loan application and query DB,AppID=123,Record exists in Applications table,,,High
+TC_17,Database,Data encryption check,Query PII columns (SSN/DOB),User Record,Data is encrypted/masked in DB,,,High
+TC_18,Database,Audit trail validation,Perform a status change,Status: Approved,Log entry found in Audit_Logs table,,,Medium
+TC_19,API,Get Loan Details API,Call GET /api/v1/loan/{id},Valid Loan ID,200 OK with correct JSON schema,,,High
+TC_20,API,Unauthorized access,Call API without Bearer Token,POST /api/v1/approve,401 Unauthorized response,,,High
+TC_21,API,Credit Bureau Mock Integration,Trigger credit check API,SSN: 000-00-0000,API returns specific error/mock score,,,Medium
+TC_22,Edge Case,Maximum Loan Amount,Apply for max allowed principal,"$1,000,000",Application accepted or specific UI handling,,,Medium
+TC_23,Edge Case,Age limit boundary,Apply with age 17 and 364 days,DOB near threshold,Validation error: Must be 18+,,,High
+TC_24,Edge Case,File size limit,Upload 50MB PDF for KYC,50MB file,Error: File size exceeds limit,,,Low
+TC_25,Edge Case,Special characters in name,Enter name with symbols/scripts,"John ""The Loan"" O'Doe",System handles/sanitizes input correctly,,,Medium
